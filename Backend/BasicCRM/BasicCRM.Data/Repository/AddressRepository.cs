@@ -104,7 +104,7 @@ namespace BasicCRM.Data.Repository
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@AddressID", id);
-                command.CommandText = "[dbo].[usp_GetAddressById]";
+                command.CommandText = "[dbo].[usp_GetClientWithAddressById]";
 
                 connection.Open();
 

@@ -14,7 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection(nameof(DatabaseSettings)));
+
 builder.Services.AddScoped<IRepository<Address>, AddressRepository>();
+builder.Services.AddScoped<IRepository<Client>,  ClientRepository>();
 
 var app = builder.Build();
 
