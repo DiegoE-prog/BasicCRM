@@ -83,7 +83,7 @@ namespace BasicCRM.Data.Repository
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@AddressID", id);
-                command.CommandText = "[dbo].[usp_GetClientWithAddressById]";
+                command.CommandText = "[dbo].[usp_GetAddressById]";
 
                 connection.Open();
 

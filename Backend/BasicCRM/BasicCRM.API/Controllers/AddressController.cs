@@ -1,7 +1,7 @@
-﻿using BasicCRM.Data.Entities;
-using BasicCRM.Data.Repository.Interfaces;
+﻿using BasicCRM.Business.Dtos.AddressDto;
+using BasicCRM.Business.Exceptions;
+using BasicCRM.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
 
 namespace BasicCRM.API.Controllers
 {
@@ -9,45 +9,44 @@ namespace BasicCRM.API.Controllers
     [Route("api/[controller]")]
     public class AddressController : ControllerBase
     {
-
-        private readonly IRepository<Address> _repository;
-        public AddressController(IRepository<Address> addressRepository)
+        private readonly IAddressService _addressService;
+        public AddressController(IAddressService addressService)
         {
-            _repository = addressRepository;
+            _addressService = addressService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Address>>> GetAll()
+        public async Task<ActionResult<IEnumerable<GetAddressDto>>> GetAll()
         {
-            var adddreses = await _repository.GetAllAsync();
+            var adddreses = await _addressService.GetAllAddressAsync();
             return Ok(adddreses);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Address>> GetById(Guid id)
+        public async Task<ActionResult<GetAddressDto>> GetById(Guid id)
         {
-            var address = await _repository.GetByIdAsync(id);
+            var address = await _addressService.GetAddressAsync(id);
             return Ok(address);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAddress(Address address)
+        public async Task<ActionResult> CreateAddress(AddressToCreateDto address)
         {
-            await _repository.CreateAsync(address);
+            await _addressService.CreateAddressAsync(address);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateAddress(Address address)
+        public async Task<ActionResult> UpdateAddress(AddressToUpdateDto address)
         {
-            await _repository.UpdateAsync(address);
+            await _addressService.UpdateAddressAsync(address);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAddress(Guid id)
         {
-            await _repository.DeleteAsync(id);
+            await _addressService.DeleteAddressAsync(id);
             return Ok();
         }
 
