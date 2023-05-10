@@ -18,7 +18,8 @@ namespace BasicCRM.Business.Validators
         public AddressToUpdateDtoValidator(IRepository<Address> repository)  
         {
             RuleFor(p => p.AddressID)
-                .NotEmpty().WithMessage("{PropertyName} is required");
+                .NotEmpty().WithMessage("{PropertyName} is required")
+                .MustAsync(AddressExists).WithMessage("There is no address with that ID");
 
             RuleFor(p => p.AddressLine)
                 .NotEmpty().WithMessage("{PropertyName} is required")
@@ -41,16 +42,12 @@ namespace BasicCRM.Business.Validators
                 .NotEmpty().WithMessage("{PropertyName} is required")
                 .NotNull();
 
-            RuleFor(p => p)
-                .MustAsync(AddressExists)
-                .WithMessage("There is no address with that ID");
-
             _repository = repository;
         }
 
-        private async Task<bool> AddressExists(AddressToUpdateDto address, CancellationToken cancellationToken)
+        private async Task<bool> AddressExists(Guid id, CancellationToken cancellationToken)
         {
-            var addressFromDb = await _repository.GetByIdAsync(address.AddressID);
+            var addressFromDb = await _repository.GetByIdAsync(id);
 
             return !addressFromDb.AddressID.Equals(Guid.Empty);
         }

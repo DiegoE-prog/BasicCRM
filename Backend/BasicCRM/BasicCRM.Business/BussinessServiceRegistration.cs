@@ -11,6 +11,7 @@ namespace BasicCRM.Business
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IClientService, ClientService>();
 
             return services;
         }

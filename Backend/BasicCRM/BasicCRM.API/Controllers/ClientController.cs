@@ -1,6 +1,5 @@
-﻿using BasicCRM.Data.Entities;
-using BasicCRM.Data.Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using BasicCRM.Business.Dtos.ClientDto;
+using BasicCRM.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasicCRM.API.Controllers
@@ -9,45 +8,45 @@ namespace BasicCRM.API.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly IRepository<Client> _repository;
+        private readonly IClientService _clientService;
 
-        public ClientController(IRepository<Client> repository)
+        public ClientController(IClientService clientService)
         {
-            _repository = repository;
+            _clientService = clientService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Client>>> GetAll()
+        public async Task<ActionResult<IEnumerable<GetClientDto>>> GetAll()
         {
-            var clients = await _repository.GetAllAsync();
+            var clients = await _clientService.GetAllClientsAsync();
             return Ok(clients);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Client>> GetById(Guid id)
+        public async Task<ActionResult<GetClientDto>> GetById(Guid id)
         {
-            var client = await _repository.GetByIdAsync(id);
+            var client = await _clientService.GetClientAsync(id);
             return Ok(client);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Client client)
+        public async Task<ActionResult> Create(ClientToCreateDto client)
         {
-            await _repository.CreateAsync(client);
+            await _clientService.CreateClientAsync(client);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(Client client)
+        public async Task<ActionResult> Update(ClientToUpdateDto client)
         {
-            await _repository.UpdateAsync(client);
+            await _clientService.UpdateClientAsync(client);
             return Ok();
         }
 
         [HttpDelete]
         public async Task<ActionResult> Delete(Guid id)
         {
-            await _repository.DeleteAsync(id);
+            await _clientService.DeleteClientAsync(id);
             return Ok();
         }
     }
