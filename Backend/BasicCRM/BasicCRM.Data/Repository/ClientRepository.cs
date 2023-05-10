@@ -113,7 +113,7 @@ namespace BasicCRM.Data.Repository
                 command.Parameters.AddWithValue("@DateOfBirth", data.DateOfBirth);
                 command.Parameters.AddWithValue("@Email", data.Email);
                 command.Parameters.AddWithValue("@PhoneNumber", data.PhoneNumber);
-                if (data.AddressID is not null)
+                if (!data.AddressID.Equals(Guid.Empty))
                     command.Parameters.AddWithValue("@AddressID", data.AddressID);
 
                 command.CommandText = storedProcedureName;
@@ -139,6 +139,8 @@ namespace BasicCRM.Data.Repository
 
             if (!reader.IsDBNull(6))
             {
+                client.AddressID = (Guid)reader["AddressID"];
+
                 var address = new Address();
 
                 address.AddressID = (Guid)reader["AddressID"];

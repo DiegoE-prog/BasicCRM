@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BasicCRM.Business.Dtos.AddressDto;
+using BasicCRM.Business.Dtos.ClientDto;
 using BasicCRM.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace BasicCRM.Business.Profiles
             CreateMap<Address, GetAddressDto>().ReverseMap();
             CreateMap<AddressToCreateDto, Address>();
             CreateMap<AddressToUpdateDto, Address>();
+
+            CreateMap<Client, GetClientDto>().ReverseMap();
+            CreateMap<ClientToCreateDto, Client>();
+            CreateMap<ClientToUpdateDto, Client>();
         }
     }
 }

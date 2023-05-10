@@ -1,5 +1,4 @@
 ﻿using BasicCRM.Business.Dtos.AddressDto;
-using BasicCRM.Business.Exceptions;
 using BasicCRM.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

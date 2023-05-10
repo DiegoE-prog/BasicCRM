@@ -9,11 +9,11 @@ namespace BasicCRM.Business.Dtos.AddressDto
     public record GetAddressDto
     {
         public Guid AddressID { get; init; }
-        public string AddressLine { get; init; } = string.Empty;
+        public string AddressLine { get; init; }
         public string? AddressDetails { get; init; }
-        public string City { get; init; } = string.Empty;
-        public string State { get; init; } = string.Empty;
+        public string City { get; init; }
+        public string State { get; init; }
         public int ZipCode { get; init; }
-        public string Country { get; init; } = string.Empty;
+        public string Country { get; init; }
     }
 }
