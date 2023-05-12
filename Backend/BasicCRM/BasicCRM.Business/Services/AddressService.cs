@@ -9,17 +9,17 @@ namespace BasicCRM.Business.Services
 {
     public class AddressService : IAddressService
     {
-        private readonly IRepository<Address> _repository;
+        private readonly IAddressRepository _repository;
         private readonly IMapper _mapper;
 
-        public AddressService(IRepository<Address> repository,
+        public AddressService(IAddressRepository repository,
             IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task CreateAddressAsync(AddressToCreateDto addressToCreate)
+        public async Task<Guid> CreateAddressAsync(AddressToCreateDto addressToCreate)
         {
             var validator = new AddressToCreateDtoValidator();
             var validationResult = validator.Validate(addressToCreate);
@@ -29,7 +29,7 @@ namespace BasicCRM.Business.Services
 
             var address = _mapper.Map<Address>(addressToCreate);
 
-            await _repository.CreateAsync(address);
+            return await _repository.CreateAsync(address);
         }
 
         public async Task UpdateAddressAsync(AddressToUpdateDto addressToUpdate)

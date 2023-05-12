@@ -10,20 +10,19 @@ namespace BasicCRM.Business.Services
 {
     public class ClientService : IClientService
     {
-        private readonly IRepository<Client> _clientRepository;
-        private readonly IRepository<Address> _addressRepository;
+        private readonly IClientRepository _clientRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;   
-        public ClientService(IRepository<Client> clientRepository,
-            IRepository<Address> addressRepository,
+        public ClientService(IClientRepository clientRepository,
+            IAddressRepository addressRepository,
             IMapper mapper)
         {
             _clientRepository = clientRepository;
             _addressRepository = addressRepository;
-
             _mapper = mapper;
         }
 
-        public async Task CreateClientAsync(ClientToCreateDto clientToCreate)
+        public async Task<Guid> CreateClientAsync(ClientToCreateDto clientToCreate)
         {
             var validator = new ClientToCreateDtoValidator(_addressRepository);
             var validationResults = await validator.ValidateAsync(clientToCreate);
@@ -33,7 +32,8 @@ namespace BasicCRM.Business.Services
 
             var address = _mapper.Map<Client>(clientToCreate);
 
-            await _clientRepository.CreateAsync(address);
+            var id = await _clientRepository.CreateAsync(address);
+            return id;
         }
 
         public async Task UpdateClientAsync(ClientToUpdateDto clientToUpdate)

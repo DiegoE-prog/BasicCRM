@@ -1,6 +1,7 @@
+CREATE DATABASE BasiCRM2;
 USE BasicCRM;
 
-CREATE TABLE [dbo].[Addresses](
+CREATE TABLE [dbo].[Address](
 	[AddressID] UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
 	[AddressLine] VARCHAR(250) NOT NULL,
 	[AddressDetails] VARCHAR(250) NULL,
@@ -8,17 +9,18 @@ CREATE TABLE [dbo].[Addresses](
 	[State] VARCHAR(50) NOT NULL,
 	[ZipCode] INT NOT NULL,
 	[Country] VARCHAR(25) NOT NULL,
+	IsActive BIT,
 	CONSTRAINT [PK_Address] PRIMARY KEY CLUSTERED ([AddressID])
 );
 
-CREATE TABLE [dbo].[Clients](
+CREATE TABLE [dbo].[Client](
 	[ClientID] UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
 	[FirstName] VARCHAR(25) NOT NULL,
 	[LastName] VARCHAR(25) NOT NULL,
 	[DateOfBirth] DATE NOT NULL,
 	[Email] VARCHAR(25) NOT NULL,
 	[PhoneNumber] VARCHAR(15) NOT NULL,
-	CONSTRAINT [ClientID] PRIMARY KEY CLUSTERED([ClientID]),
+	CONSTRAINT [PK_Client] PRIMARY KEY CLUSTERED([ClientID]),
 	[AddressID] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES [dbo].[Addresses]([AddressID]),
 );
 
@@ -64,6 +66,7 @@ BEGIN TRY
 	VALUES
 	(@AddressID, @AddressLine, @AddressDetails, @City, @State, @ZipCode, @Country, 1)
 	COMMIT TRAN 
+	SELECT SCOPE_IDENTITY()
 END TRY
 BEGIN CATCH 
 	ROLLBACK TRAN
@@ -120,8 +123,8 @@ EXEC [dbo].[usp_GetAllAddresses];
 
 EXEC [dbo].[usp_GetAddressById] @AddressID = '975D832B-C83B-431C-B95A-79BEE99B43BE';
 
-EXEC [dbo].[usp_CreateAddress] @AddressID = NULL, @AddressLine = "Echo Street",
-@City = "Uriangato", @AddressDetails = NULL, @State ="Guanajuato", @ZipCode = 38887, @Country = Mexico;
+EXEC [dbo].[usp_CreateAddress] @AddressID = NULL, @AddressLine = "Alpha Street",
+@City = "Uriangato", @AddressDetails = 'Red Facade', @State ="Guanajuato", @ZipCode = 38887, @Country = Mexico;
 
 EXEC [dbo].[usp_UpdateAddress] @AddressID = '212974DC-B299-4E62-81CC-FF1E9D1E7321', @AddressLine = 'Lone Street',
 @City = 'Moroleon', @State ='Guanajuato', @ZipCode = 38887, @Country = Mexico;

@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace BasicCRM.Data.Repository
 {
-    public class AddressRepository : IRepository<Address>
+    public class AddressRepository : IAddressRepository
     {
         private readonly DbConnection _connection;
         private DatabaseSettings _dbSettings;
@@ -17,14 +17,69 @@ namespace BasicCRM.Data.Repository
             _connection = new DbConnection(_dbSettings.DefaultConnection!);
         }
 
-        public async Task CreateAsync(Address data)
+        public async Task<Guid> CreateAsync(Address data)
         {
-            await ExecuteAddressUpsertStoredProcedureAsync("[dbo].[usp_CreateAddress]", data);
+            DataTable dt = new();
+            var addressID = Guid.Empty;
+
+            using (var connection = (SqlConnection) _connection.CreateConnection()) 
+            {
+                var command = connection.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[usp_CreateAddress]";
+
+                command.Parameters.AddWithValue("@AddressID", data.AddressID);
+                command.Parameters.AddWithValue("@AddressLine", data.AddressLine);
+                command.Parameters.AddWithValue("@AddressDetails", data.AddressDetails);
+                command.Parameters.AddWithValue("@City", data.City);
+                command.Parameters.AddWithValue("@State", data.State);
+                command.Parameters.AddWithValue("@ZipCode", data.ZipCode);
+                command.Parameters.AddWithValue("@Country", data.Country);
+
+                command.Parameters.Add("@NewAddressID", SqlDbType.UniqueIdentifier);
+                command.Parameters["@NewAddressID"].Direction = ParameterDirection.ReturnValue;
+
+                connection.Open();
+
+                //await command.ExecuteNonQueryAsync();
+
+                SqlDataAdapter adapter = new(command);
+
+                adapter.Fill(dt);
+
+                connection.Close();
+
+                if (dt.Rows.Count > 0)
+                    addressID = (Guid) dt.Rows[0]["NewAddressID"];
+                
+
+                return addressID;
+            }
         }
 
         public async Task UpdateAsync(Address data)
         {
-            await ExecuteAddressUpsertStoredProcedureAsync("[dbo].[usp_UpdateAddress]", data);
+            //return await ExecuteAddressUpsertStoredProcedureAsync("[dbo].[usp_UpdateAddress]", data);
+            using(var connection = (SqlConnection)_connection.CreateConnection())
+            {
+                var command = connection.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[usp_UpdateAddress]";
+
+                command.Parameters.AddWithValue("@AddressID", data.AddressID);
+                command.Parameters.AddWithValue("@AddressLine", data.AddressLine);
+                command.Parameters.AddWithValue("@AddressDetails", data.AddressDetails);
+                command.Parameters.AddWithValue("@City", data.City);
+                command.Parameters.AddWithValue("@State", data.State);
+                command.Parameters.AddWithValue("@ZipCode", data.ZipCode);
+                command.Parameters.AddWithValue("@Country", data.Country);
+
+                connection.Open();
+
+                await command.ExecuteNonQueryAsync();
+
+                connection.Close();
+            }  
         }
 
         public async Task DeleteAsync(Guid id)
@@ -100,17 +155,17 @@ namespace BasicCRM.Data.Repository
             return address;
         }
 
-        private async Task ExecuteAddressUpsertStoredProcedureAsync(string storedProcedureName, Address data)
+        private async Task<Guid> ExecuteAddressUpsertStoredProcedureAsync(string storedProcedureName, Address data)
         {
+            var addressID = Guid.Empty;
+
             using(var connection = (SqlConnection)_connection.CreateConnection())
             {
+                DataTable dt = new DataTable();
+
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-
-                if(storedProcedureName == "[dbo].[usp_UpdateAddress]")
-                {
-                    command.Parameters.AddWithValue("@AddressID", data.AddressID);
-                }
+                command.CommandText = storedProcedureName;
 
                 command.Parameters.AddWithValue("@AddressLine", data.AddressLine);
                 command.Parameters.AddWithValue("@AddressDetails", data.AddressDetails);
@@ -119,14 +174,32 @@ namespace BasicCRM.Data.Repository
                 command.Parameters.AddWithValue("@ZipCode", data.ZipCode);
                 command.Parameters.AddWithValue("@Country", data.Country);
 
-                command.CommandText = storedProcedureName;
-
                 connection.Open();
 
-                await command.ExecuteNonQueryAsync();
+                if (storedProcedureName == "[dbo].[usp_UpdateAddress]")
+                {
+                    
+                    addressID = data.AddressID;
+
+                    
+                }
+
+                if (storedProcedureName == "[dbo].[usp_CreateAddress]")
+                {
+                    command.Parameters.Add("@NewAddressID", SqlDbType.UniqueIdentifier);
+                    command.Parameters["@NewAddressID"].Direction = ParameterDirection.ReturnValue;
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        addressID = (Guid)dt.Rows[0]["NewAddressID"];
+                    }
+                }
 
                 connection.Close();
             }
+            return addressID;
         }
 
         private Address PopulateAddressFromReader(SqlDataReader reader)

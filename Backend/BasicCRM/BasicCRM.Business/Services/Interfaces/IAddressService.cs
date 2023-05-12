@@ -11,7 +11,7 @@ namespace BasicCRM.Business.Services.Interfaces
     {
         Task<IEnumerable<GetAddressDto>> GetAllAddressAsync();
         Task<GetAddressDto> GetAddressAsync(Guid id);
-        Task CreateAddressAsync(AddressToCreateDto addressDto);
+        Task<Guid> CreateAddressAsync(AddressToCreateDto addressDto);
         Task UpdateAddressAsync(AddressToUpdateDto addressToUpdate);
         Task DeleteAddressAsync(Guid id);
     }

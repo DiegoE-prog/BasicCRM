@@ -6,7 +6,7 @@ namespace BasicCRM.Business.Services.Interfaces
     {
         Task<IEnumerable<GetClientDto>> GetAllClientsAsync();
         Task<GetClientDto> GetClientAsync(Guid id);
-        Task CreateClientAsync(ClientToCreateDto clientCreate);
+        Task<Guid> CreateClientAsync(ClientToCreateDto clientCreate);
         Task UpdateClientAsync(ClientToUpdateDto clientToUpdate);
         Task DeleteClientAsync(Guid id);
     }

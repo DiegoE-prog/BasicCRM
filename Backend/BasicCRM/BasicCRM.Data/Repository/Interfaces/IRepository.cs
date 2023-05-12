@@ -10,7 +10,7 @@ namespace BasicCRM.Data.Repository.Interfaces
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(Guid id);
-        Task CreateAsync (TEntity data);
+        Task<Guid> CreateAsync (TEntity data);
         Task UpdateAsync (TEntity data);
         Task DeleteAsync (Guid id);
     }

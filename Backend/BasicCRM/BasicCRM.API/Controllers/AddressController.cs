@@ -21,7 +21,7 @@ namespace BasicCRM.API.Controllers
             return Ok(adddreses);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetAddressById")]
         public async Task<ActionResult<GetAddressDto>> GetById(Guid id)
         {
             var address = await _addressService.GetAddressAsync(id);
@@ -31,8 +31,8 @@ namespace BasicCRM.API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateAddress(AddressToCreateDto address)
         {
-            await _addressService.CreateAddressAsync(address);
-            return Ok();
+            var id = await _addressService.CreateAddressAsync(address);
+            return RedirectToRoute("GetAddressById", new { id });
         }
 
         [HttpPut]

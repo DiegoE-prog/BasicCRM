@@ -22,7 +22,7 @@ namespace BasicCRM.API.Controllers
             return Ok(clients);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}",Name = "GetClientByID")]
         public async Task<ActionResult<GetClientDto>> GetById(Guid id)
         {
             var client = await _clientService.GetClientAsync(id);
@@ -32,8 +32,8 @@ namespace BasicCRM.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(ClientToCreateDto client)
         {
-            await _clientService.CreateClientAsync(client);
-            return Ok();
+            var id = await _clientService.CreateClientAsync(client);
+            return RedirectToRoute("GetClientByID", new {id});
         }
 
         [HttpPut]
