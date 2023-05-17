@@ -11,7 +11,7 @@ function Header() {
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="" className="nav-link text-dark">
+						<NavLink to="/Client/ClientIndex" className="nav-link text-dark">
 							<i class="bi bi-people-fill"></i> Clients
 						</NavLink>
 					</li>
