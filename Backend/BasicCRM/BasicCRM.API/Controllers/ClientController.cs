@@ -43,7 +43,7 @@ namespace BasicCRM.API.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
             await _clientService.DeleteClientAsync(id);
