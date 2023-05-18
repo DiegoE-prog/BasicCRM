@@ -15,7 +15,7 @@ function EditClient() {
 	async function fetchSelectData() {
 		setLoading(true)
 		const response = await getAdressesAsync()
-		const addresses = await response.data
+		const addresses = await response.data.content
 		const addressOptions = addresses.map((address) => {
 			return { value: address.addressID, label: address.addressLine }
 		})
@@ -25,7 +25,7 @@ function EditClient() {
 
 	async function fetchClient() {
 		const response = await getClientAsync(id)
-		const client = await response.data
+		const client = await response.data.content
 		setClient(client)
 		setSelect(handleValue(client))
 	}

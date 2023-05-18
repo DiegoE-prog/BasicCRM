@@ -52,7 +52,7 @@ function AddressIndex() {
 		setLoading(true)
 
 		const responseFromApi = await getAdressesAsync()
-		const addresses = await responseFromApi.data
+		const addresses = await responseFromApi.data.content
 
 		setAddresses(addresses)
 		setLoading(false)

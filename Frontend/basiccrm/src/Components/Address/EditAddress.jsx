@@ -10,7 +10,7 @@ function EditAddress() {
 	useEffect(() => {
 		const fetchAddress = async () => {
 			const responseFromApi = await getAddressAsync(id)
-			const address = responseFromApi.data
+			const address = responseFromApi.data.content
 			setAddress(address)
 		}
 		fetchAddress()
