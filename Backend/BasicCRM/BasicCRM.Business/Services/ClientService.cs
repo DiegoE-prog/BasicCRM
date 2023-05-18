@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BasicCRM.Business.Dtos.AddressDto;
 using BasicCRM.Business.Dtos.ClientDto;
 using BasicCRM.Business.Exceptions;
 using BasicCRM.Business.Services.Interfaces;
@@ -60,7 +61,17 @@ namespace BasicCRM.Business.Services
 
         public async Task<IEnumerable<GetClientDto>> GetAllClientsAsync()
         {
-            var clients = _mapper.Map<List<GetClientDto>>(await _clientRepository.GetAllAsync());
+            var clients = _mapper.Map<List<GetClientDto>>(await _clientRepository.GetAllAsync(), opts =>
+            {
+                opts.AfterMap(async (src, dest) =>
+                {
+                    foreach (var client in dest)
+                    {
+                        if (!client.AddressID.Equals(Guid.Empty))
+                            client.Address = _mapper.Map<GetAddressDto>(await _addressRepository.GetByIdAsync(client.AddressID));
+                    }
+                });
+            });
 
             if (clients.Count is 0)
                 throw new NotFoundException("There are not clients registered");
@@ -70,7 +81,15 @@ namespace BasicCRM.Business.Services
 
         public async Task<GetClientDto> GetClientAsync(Guid id)
         {
-            var client = _mapper.Map<GetClientDto>(await _clientRepository.GetByIdAsync(id));
+            var client = _mapper.Map<GetClientDto>(await _clientRepository.GetByIdAsync(id), opts =>
+            {
+                opts.AfterMap(async (src, dest) =>
+                {
+                    if (!dest.ClientID.Equals(Guid.Empty))
+                        dest.Address = _mapper.Map<GetAddressDto>(await _addressRepository.GetByIdAsync(dest.AddressID));
+                    
+                });
+            });
 
             if (client.ClientID.Equals(Guid.Empty))
                 throw new NotFoundException("There is not a client with that ID");

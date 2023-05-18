@@ -12,6 +12,6 @@ namespace BasicCRM.Business.Dtos.ClientDto
         public string Email { get; init; }
         public string PhoneNumber { get; init; }
         public Guid AddressID { get; set; }
-        public GetAddressDto? Address { get; init; }
+        public GetAddressDto? Address { get; set; }
     }
 }

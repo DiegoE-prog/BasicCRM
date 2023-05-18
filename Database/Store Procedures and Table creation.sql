@@ -123,7 +123,7 @@ EXEC [dbo].[usp_GetAllAddresses];
 
 EXEC [dbo].[usp_GetAddressById] @AddressID = '975D832B-C83B-431C-B95A-79BEE99B43BE';
 
-EXEC [dbo].[usp_CreateAddress] @AddressID = NULL, @AddressLine = "Alpha Street",
+EXEC [dbo].[usp_CreateAddress] @AddressID = NULL, @AddressLine = "Halland Street",
 @City = "Uriangato", @AddressDetails = 'Red Facade', @State ="Guanajuato", @ZipCode = 38887, @Country = Mexico;
 
 EXEC [dbo].[usp_UpdateAddress] @AddressID = '212974DC-B299-4E62-81CC-FF1E9D1E7321', @AddressLine = 'Lone Street',
@@ -262,8 +262,8 @@ BEGIN CATCH
 END CATCH
 END
 
-EXEC [dbo].[usp_CreateClient] @FirstName = 'Diego', @LastName = 'Olvera', @DateOfBirth='1997-07-05', 
-	@Email= 'diego.Olvera@hotmail.com', @PhoneNumber = ''; 
+EXEC [dbo].[usp_CreateClient] @FirstName = 'Diego', @LastName = 'Olvera Escutia', @DateOfBirth='1997-07-05', 
+	@Email= 'diego.Olvera@hotmail.com', @PhoneNumber = '4451431242', @AddressID = '00000000-0000-0000-0000-000000000000'; 
 
 EXEC [dbo].[usp_UpdateClient] @ClientID = '6BEC120D-10B3-43FB-B3EA-0D4A88E3B07D', @FirstName = 'Diego', @LastName = 'Sargent',
 	@DateOfBirth = '1997-07-05', @Email = 'diego.sargent@hotmail.com',

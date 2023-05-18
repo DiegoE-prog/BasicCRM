@@ -1,4 +1,5 @@
-﻿using BasicCRM.Business.Dtos.ClientDto;
+﻿using BasicCRM.API.Models;
+using BasicCRM.Business.Dtos.ClientDto;
 using BasicCRM.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace BasicCRM.API.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IClientService _clientService;
+        private Response response = new();
 
         public ClientController(IClientService clientService)
         {
@@ -18,36 +20,39 @@ namespace BasicCRM.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetClientDto>>> GetAll()
         {
-            var clients = await _clientService.GetAllClientsAsync();
-            return Ok(clients);
+            response.Content = await _clientService.GetAllClientsAsync();
+            return Ok(response);
         }
 
         [HttpGet("{id}",Name = "GetClientByID")]
         public async Task<ActionResult<GetClientDto>> GetById(Guid id)
         {
-            var client = await _clientService.GetClientAsync(id);
-            return Ok(client);
+            response.Content = await _clientService.GetClientAsync(id);
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<ActionResult> Create(ClientToCreateDto client)
         {
-            var id = await _clientService.CreateClientAsync(client);
-            return RedirectToRoute("GetClientByID", new {id});
+            response.Content = await _clientService.CreateClientAsync(client);
+            response.Message = "Client created successfully";
+            return Ok(response);
         }
 
         [HttpPut]
         public async Task<ActionResult> Update(ClientToUpdateDto client)
         {
             await _clientService.UpdateClientAsync(client);
-            return Ok();
+            response.Message = "Client updated successfully";
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
             await _clientService.DeleteClientAsync(id);
-            return Ok();
+            response.Message = "Client deleted successfully";
+            return Ok(response);
         }
     }
 }
