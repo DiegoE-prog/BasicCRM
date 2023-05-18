@@ -59,7 +59,7 @@ function ClientIndex() {
 	async function fetchTableData() {
 		setLoading(true)
 		const response = await getClientsAsync()
-		const clients = response.data
+		const clients = response.data.content
 		console.log(clients)
 		setClients(clients)
 		setLoading(false)
