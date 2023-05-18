@@ -8,10 +8,10 @@ namespace BasicCRM.Business.Validators
 {
     public class ClientToUpdateDtoValidator : AbstractValidator<ClientToUpdateDto>
     {
-        private readonly IRepository<Address> _addressRepository;
-        private readonly IRepository<Client> _clientRepository;
-        public ClientToUpdateDtoValidator(IRepository<Address> addressRepository,
-                                          IRepository<Client> clientRepository)
+        private readonly IAddressRepository _addressRepository;
+        private readonly IClientRepository _clientRepository;
+        public ClientToUpdateDtoValidator(IAddressRepository addressRepository,
+                                          IClientRepository clientRepository)
         {
             RuleFor(p => p.ClientID)
                 .NotEmpty().WithMessage("{PropertyName} is required")

@@ -1,4 +1,5 @@
-﻿using BasicCRM.Business.Dtos.AddressDto;
+﻿using BasicCRM.API.Models;
+using BasicCRM.Business.Dtos.AddressDto;
 using BasicCRM.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace BasicCRM.API.Controllers
     public class AddressController : ControllerBase
     {
         private readonly IAddressService _addressService;
+        private Response response = new();
         public AddressController(IAddressService addressService)
         {
             _addressService = addressService;
@@ -17,36 +19,39 @@ namespace BasicCRM.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetAddressDto>>> GetAll()
         {
-            var adddreses = await _addressService.GetAllAddressAsync();
-            return Ok(adddreses);
+            response.Content = await _addressService.GetAllAddressAsync();
+            return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetAddressById")]
         public async Task<ActionResult<GetAddressDto>> GetById(Guid id)
         {
-            var address = await _addressService.GetAddressAsync(id);
-            return Ok(address);
+            response.Content = await _addressService.GetAddressAsync(id);
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateAddress(AddressToCreateDto address)
         {
-            await _addressService.CreateAddressAsync(address);
-            return Ok();
+            response.Content = await _addressService.CreateAddressAsync(address);
+            response.Message = "Address created successfully";
+            return Ok(response);
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateAddress(AddressToUpdateDto address)
         {
             await _addressService.UpdateAddressAsync(address);
-            return Ok();
+            response.Message = "Address updated successfully";
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAddress(Guid id)
         {
             await _addressService.DeleteAddressAsync(id);
-            return Ok();
+            response.Message = "Address deleted successfully";
+            return Ok(response);
         }
 
     }
