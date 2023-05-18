@@ -8,7 +8,6 @@
         public DateTime DateOfBirth { get; set; }
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-        public Guid? AddressID { get; set; }
-        public Address? Address { get; set; }
+        public Guid AddressID { get; set; }
     }
 }

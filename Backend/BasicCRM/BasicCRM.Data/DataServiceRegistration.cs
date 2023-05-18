@@ -17,8 +17,11 @@ namespace BasicCRM.Data
     {
         public static IServiceCollection AddDataServices(this IServiceCollection services)
         {
-            services.AddScoped<IRepository<Address>, AddressRepository>();
-            services.AddScoped<IRepository<Client>, ClientRepository>();
+            //services.AddScoped<IRepository<Address>, AddressRepository>();
+            //services.AddScoped<IRepository<Client>, ClientRepository>();
+
+            services.AddScoped<IAddressRepository, AddressRepository>();    
+            services.AddScoped<IClientRepository, ClientRepository>();
 
             return services;
         }
