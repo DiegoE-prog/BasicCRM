@@ -1,11 +1,22 @@
 import React from "react"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { getAddressAsync } from "../../Api/AddressApi"
+import { getAddressAsync, editAddressAsync } from "../../Api/AddressApi"
+import { useNavigate } from "react-router-dom"
 
 function EditAddress() {
-	const [address, setAddress] = useState([])
 	const { id } = useParams()
+	const [address, setAddress] = useState({
+		addressID: id,
+		addressLine: "",
+		addressDetails: "",
+		city: "",
+		state: "",
+		zipCode: "",
+		country: ""
+	})
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const fetchAddress = async () => {
@@ -16,36 +27,80 @@ function EditAddress() {
 		fetchAddress()
 	}, [])
 
-	const handleEdit = () => {
-		console.log(address)
+	const handleChange = (e) => {
+		const value = e.target.value
+		setAddress({
+			...address,
+			[e.target.name]: value
+		})
+	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		const addressData = {
+			addressID: address.addressID,
+			addressLine: address.addressLine,
+			addressDetails: address.addressDetails,
+			city: address.city,
+			state: address.state,
+			zipCode: address.zipCode,
+			country: address.country
+		}
+
+		const response = await editAddressAsync(addressData)
+		response.then((response) => {
+			if (response.data.success) {
+				navigate("/Address/AddressIndex")
+			}
+		})
 	}
 
 	return (
 		<div className="row p-2">
 			<div className="col-12 h4">Edit Address</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Address Line" value={address.addressLine} onChange={(e) => setAddress({ ...address, addressLine: e.target.value })} />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Address Details" value={address.addressDetails} onChange={(e) => setAddress({ ...address, addressDetails: e.target.value })} />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="City" value={address.city} onChange={(e) => setAddress({ ...address, city: e.target.value })} />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="State" value={address.state} onChange={(e) => setAddress({ ...address, state: e.target.value })} />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Zip Code" value={address.zipCode} onChange={(e) => setAddress({ ...address, zipCode: e.target.value })} />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Country" value={address.country} onChange={(e) => setAddress({ ...address, country: e.target.value })} />
-			</div>
-			<div className="col-12 col-md-6 offset-md-3 p-2">
-				<button className="btn btn-primary btn-sm form-control" onClick={handleEdit}>
-					Edit
-				</button>
-			</div>
+			<form onSubmit={handleSubmit}>
+				<div className="col-12 mb-2 p-1">
+					<label htmlFor="addressLine" class="form-label">
+						Address Line
+					</label>
+					<input type="text" name="addressLine" className="form-control form-control-sm" value={address.addressLine} onChange={handleChange} />
+				</div>
+				<div className="col-12 mb-2  p-1">
+					<label htmlFor="addressDetails" class="form-label">
+						Address Line
+					</label>
+					<input type="text" name="addressDetails" className="form-control form-control-sm" value={address.addressDetails} onChange={handleChange} />
+				</div>
+				<div className="col-12 mb-2 p-1">
+					<label htmlFor="city" class="form-label">
+						City
+					</label>
+					<input type="text" name="city" className="form-control form-control-sm" value={address.city} onChange={handleChange} />
+				</div>
+				<div className="col-12 mb-2 p-1">
+					<label htmlFor="state" class="form-label">
+						State
+					</label>
+					<input type="text" name="state" className="form-control form-control-sm" value={address.state} onChange={handleChange} />
+				</div>
+				<div className="col-12 mb-2 p-1">
+					<label htmlFor="zipCode" class="form-label">
+						Zip Code
+					</label>
+					<input type="number" name="zipCode" className="form-control form-control-sm" value={address.zipCode} onChange={handleChange} />
+				</div>
+				<div className="col-12 mb-2 p-1">
+					<label htmlFor="country" class="form-label">
+						Country
+					</label>
+					<input type="text" name="country" className="form-control form-control-sm" value={address.country} onChange={handleChange} />
+				</div>
+				<div className="col-12 col-md-6 offset-md-3 p-2">
+					<button type="submit" className="btn btn-primary btn-sm form-control">
+						Edit
+					</button>
+				</div>
+			</form>
 		</div>
 	)
 }
