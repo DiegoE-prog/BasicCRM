@@ -2,11 +2,15 @@ import React, { Fragment } from "react"
 import { NavLink } from "react-router-dom"
 import DataTable from "react-data-table-component"
 import { useState, useEffect } from "react"
-import { getClientsAsync } from "../../Api/ClientApi"
+import { deleteClientAsync, getClientsAsync } from "../../Api/ClientApi"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
 function ClientIndex() {
 	const [clients, setClients] = useState([])
 	const [loading, setLoading] = useState(false)
+	const [deleteTrigger, setDeleteTrigger] = useState(false)
+	const MySwal = withReactContent(Swal)
 
 	const columns = [
 		{
@@ -48,7 +52,7 @@ function ClientIndex() {
 						<i class="bi bi-pencil-square"></i>
 					</NavLink>
 
-					<button className="btn btn-danger">
+					<button className="btn btn-danger" onClick={() => handleDelete(row.clientID)}>
 						<i class="bi bi-trash"></i>
 					</button>
 				</div>
@@ -60,14 +64,35 @@ function ClientIndex() {
 		setLoading(true)
 		const response = await getClientsAsync()
 		const clients = response.data.content
-		console.log(clients)
 		setClients(clients)
 		setLoading(false)
 	}
 
 	useEffect(() => {
 		fetchTableData()
-	}, [])
+	}, [deleteTrigger])
+
+	const handleDelete = (id) => {
+		MySwal.fire({
+			title: "Are you sure",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!"
+		}).then((result) => {
+			if (result.isConfirmed) {
+				const response = deleteClientAsync(id)
+				response.then((response) => {
+					if (response.data.success) {
+						MySwal.fire("Deleted!", "The Client has been deleted.", "success")
+						setDeleteTrigger(!deleteTrigger)
+					}
+				})
+			}
+		})
+	}
 
 	return (
 		<Fragment>
