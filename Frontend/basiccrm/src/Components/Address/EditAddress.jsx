@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getAddressAsync, editAddressAsync } from "../../Api/AddressApi"
 import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
 function EditAddress() {
 	const { id } = useParams()
@@ -17,6 +19,7 @@ function EditAddress() {
 	})
 
 	const navigate = useNavigate()
+	const MySwal = withReactContent(Swal)
 
 	useEffect(() => {
 		const fetchAddress = async () => {
@@ -48,11 +51,17 @@ function EditAddress() {
 		}
 
 		const response = await editAddressAsync(addressData)
-		response.then((response) => {
-			if (response.data.success) {
-				navigate("/Address/AddressIndex")
-			}
-		})
+
+		if (response.data.success) {
+			MySwal.fire({
+				position: "top-end",
+				icon: "success",
+				title: response.data.message,
+				showConfirmButton: false,
+				timer: 2000
+			})
+			navigate("/Address/AddressIndex")
+		}
 	}
 
 	return (
