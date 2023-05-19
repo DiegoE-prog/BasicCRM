@@ -1,30 +1,54 @@
 import React from "react"
+import { useState } from "react"
+import { addAddressAsync } from "../../Api/AddressApi"
+import { useNavigate } from "react-router-dom"
+
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+import FromAddress from "./FormAddress"
 
 function AddAddress() {
+	const [address, setAddress] = useState({
+		addressID: "",
+		addressLine: "",
+		addressDetails: "",
+		city: "",
+		state: "",
+		zipCode: "",
+		country: ""
+	})
+
+	const MySwal = withReactContent(Swal)
+	const navigate = useNavigate()
+
+	const onSubmit = async () => {
+		const addressData = {
+			addressLine: address.addressLine,
+			addressDetails: address.addressDetails,
+			city: address.city,
+			state: address.state,
+			zipCode: address.zipCode,
+			country: address.country
+		}
+
+		const response = await addAddressAsync(addressData)
+		console.log(response)
+		if (response.data.success) {
+			MySwal.fire({
+				position: "top-end",
+				icon: "success",
+				title: response.data.message,
+				showConfirmButton: false,
+				timer: 2000
+			})
+			navigate("/Address/AddressIndex")
+		}
+	}
+
 	return (
 		<div className="row p-2">
 			<div className="col-12 h4">Add new Address</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Address Line" />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Address Details" />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="City" />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="State" />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Zip Code" />
-			</div>
-			<div className="col-12 col-md-4 p-1">
-				<input className="form-control form-control-sm" placeholder="Country" />
-			</div>
-			<div className="col-12 col-md-6 offset-md-3 p-2">
-				<button className="btn btn-primary btn-sm form-control">Add</button>
-			</div>
+			<FromAddress onSubmit={onSubmit} address={address} setAddress={setAddress} />
 		</div>
 	)
 }
