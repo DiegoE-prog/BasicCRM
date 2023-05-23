@@ -89,7 +89,7 @@ function FromAddress(props) {
 				/>
 				<span className="text-danger">{errors.state && errors.state.message}</span>
 			</div>
-			<div className="col-12 mb-2 p-1">
+			<div className="col-12  mb-2 p-1">
 				<label htmlFor="zipCode" class="form-label">
 					Zip Code
 				</label>
