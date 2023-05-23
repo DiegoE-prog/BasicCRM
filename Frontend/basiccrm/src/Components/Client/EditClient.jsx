@@ -13,7 +13,7 @@ function EditClient() {
 		clientID: "",
 		firstName: "",
 		lastName: "",
-		dateOfBirth: "",
+		dateOfBirthday: "",
 		email: "",
 		phoneNumber: "",
 		addressID: ""
@@ -36,14 +36,12 @@ function EditClient() {
 			clientID: client.clientID,
 			firstName: client.firstName,
 			lastName: client.lastName,
-			dateOfBirth: client.dateOfBirth,
+			dateOfBirth: new Date(client.dateOfBirthday),
 			email: client.email,
 			phoneNumber: client.phoneNumber,
 			addressID: client.addressID
 		}
-
 		const response = await editClientAsync(clientData)
-		console.log(response)
 		if (response.data.success) {
 			MySwal.fire({
 				position: "top-end",

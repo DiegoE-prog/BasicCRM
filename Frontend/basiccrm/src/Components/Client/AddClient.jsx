@@ -8,9 +8,10 @@ import withReactContent from "sweetalert2-react-content"
 
 function AddClient() {
 	const [client, setClient] = useState({
+		clientID: "",
 		firstName: "",
 		lastName: "",
-		dateOfBirth: "",
+		dateOfBirthday: "",
 		email: "",
 		phoneNumber: "",
 		addressID: ""
@@ -23,14 +24,12 @@ function AddClient() {
 		const clientData = {
 			firstName: client.firstName,
 			lastName: client.lastName,
-			dateOfBirth: client.dateOfBirth,
+			dateOfBirth: new Date(client.dateOfBirthday),
 			email: client.email,
 			phoneNumber: client.phoneNumber,
-			addressID: client.addressID
+			addressID: client.addressID === "" ? "00000000-0000-0000-0000-000000000000" : client.addressID
 		}
-
 		const response = await addClientAsync(clientData)
-		console.log(response)
 		if (response.data.success) {
 			MySwal.fire({
 				position: "top-end",

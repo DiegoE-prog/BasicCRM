@@ -23,7 +23,7 @@ function ClientIndex() {
 		},
 		{
 			name: "Date of Birth",
-			selector: (row) => row.dateOfBirth
+			selector: (row) => row.dateOfBirthday
 		},
 		{
 			name: "Email",

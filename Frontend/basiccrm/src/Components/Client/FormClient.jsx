@@ -2,6 +2,8 @@ import { getAdressesAsync } from "../../Api/AddressApi"
 import Select from "react-select"
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 function FormClient(props) {
 	const client = props.client
@@ -10,6 +12,8 @@ function FormClient(props) {
 	const [addressOptions, setAddressOptions] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [select, setSelect] = useState({})
+	const [startDate, setStartDate] = useState()
+	const [endDate, setEndDate] = useState(new Date())
 
 	const {
 		handleSubmit,
@@ -20,7 +24,7 @@ function FormClient(props) {
 		defaultValues: {
 			firstName: client.firstName,
 			lastName: client.lastName,
-			dateOfBirth: client.dateOfBirth,
+			dateOfBirthday: client.dateOfBirthday,
 			email: client.email,
 			phoneNumber: client.phoneNumber,
 			addressID: client.addressID
@@ -42,15 +46,26 @@ function FormClient(props) {
 		setLoading(false)
 	}
 
-	const fetchSelect = (client) => {
-		if (client.addressID !== null) {
-			setSelect({ value: client.addressID, label: client.address?.addressLine })
+	useEffect(() => {
+		fetchSelectData()
+	}, [])
+
+	const fetchSelect = () => {
+		if (client.addressID !== "") {
+			const labelSel = addressOptions.find((option) => option.value === client.addressID)?.label
+			setSelect({ ...select, value: client?.addressID, label: labelSel })
+		}
+	}
+
+	const fetchDate = () => {
+		if (client.dateOfBirthday !== "") {
+			setStartDate(new Date(client.dateOfBirthday))
 		}
 	}
 
 	useEffect(() => {
-		fetchSelectData()
-		fetchSelect(client)
+		fetchDate()
+		fetchSelect()
 	}, [client])
 
 	const handleChange = (e) => {
@@ -96,20 +111,22 @@ function FormClient(props) {
 				<span className="text-danger">{errors.lastName && errors.lastName.message}</span>
 			</div>
 			<div className="col-12 col-md-4 mb-2 p-1">
-				<label htmlFor="dateOfBirth" className="form-label">
+				<label htmlFor="dateOfBirthday" className="form-label">
 					Date of Birth
 				</label>
-				<input
-					type="text"
-					name="dateOfBirth"
-					{...register("dateOfBirth", {
+				<DatePicker
+					name="dateOfBirthday"
+					{...register("dateOfBirthday", {
 						required: "Date of Birth is required"
 					})}
 					className="form-control form-control-sm"
-					value={client.dateOfBirth}
-					onChange={handleChange}
+					selected={startDate}
+					maxDate={endDate}
+					onChange={(e) => {
+						setClient({ ...client, dateOfBirthday: e })
+					}}
 				/>
-				<span className="text-danger">{errors.dateOfBirth && errors.dateOfBirth.message}</span>
+				<span className="text-danger">{errors.dateOfBirthday && errors.dateOfBirthday.message}</span>
 			</div>
 			<div className="col-12 col-md-4 mb-2 p-1">
 				<label htmlFor="email" className="form-label">
@@ -161,14 +178,14 @@ function FormClient(props) {
 					name="addressID"
 					value={select}
 					onChange={(e) => {
-						setSelect({ value: e.value, label: e.label })
 						setClient({ ...client, addressID: e.value })
+						//setSelect({ ...select, value: e.value, label: e.label })
 					}}
 				/>
 			</div>
 			<div className="col-12 col-md-6 offset-md-3 p-2">
 				<button type="submit" className="btn btn-primary btn-sm form-control">
-					Edit
+					{client.clientID === "" ? "Add" : "Edit"}
 				</button>
 			</div>
 		</form>
