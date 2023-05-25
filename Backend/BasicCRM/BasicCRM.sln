@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCRM.Data", "BasicCRM.Data\BasicCRM.Data.csproj", "{6B7D4E20-527D-4B4F-AB58-EE5DC6358B62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCRM.Data", "BasicCRM.Data\BasicCRM.Data.csproj", "{6B7D4E20-527D-4B4F-AB58-EE5DC6358B62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCRM.Business", "BasicCRM.Business\BasicCRM.Business.csproj", "{844F76C1-5FD8-4149-B47C-39306577C8C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCRM.Business", "BasicCRM.Business\BasicCRM.Business.csproj", "{844F76C1-5FD8-4149-B47C-39306577C8C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCRM.API", "BasicCRM.API\BasicCRM.API.csproj", "{8A9F0FE6-497A-490F-A9D5-7E744BD862C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCRM.API", "BasicCRM.API\BasicCRM.API.csproj", "{8A9F0FE6-497A-490F-A9D5-7E744BD862C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCRM.Business.Tests", "BasicCRM.Business.Tests\BasicCRM.Business.Tests.csproj", "{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{8A9F0FE6-497A-490F-A9D5-7E744BD862C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A9F0FE6-497A-490F-A9D5-7E744BD862C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A9F0FE6-497A-490F-A9D5-7E744BD862C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

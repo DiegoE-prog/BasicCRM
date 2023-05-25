@@ -19,7 +19,12 @@ namespace BasicCRM.Business.Validators
         {
             RuleFor(p => p.AddressID)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .MustAsync(AddressExists).WithMessage("There is no address with that ID");
+                .DependentRules(() =>
+                {
+                    RuleFor(p => p.AddressID)
+                     .MustAsync(AddressExists).WithMessage("There is no address with that ID");
+                });
+                
 
             RuleFor(p => p.AddressLine)
                 .NotEmpty().WithMessage("{PropertyName} is required")
