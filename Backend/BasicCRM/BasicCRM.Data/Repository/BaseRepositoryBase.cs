@@ -1,5 +1,6 @@
 ﻿using BasicCRM.Data.Entities;
 using BasicCRM.Data.Repository.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,8 +19,17 @@ namespace BasicCRM.Data.Repository
 
         public BaseRepository(IOptions<DatabaseSettings> dbSettings)
         {
+            bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             _dbSettings = dbSettings.Value;
-            _connection = new DbConnection(_dbSettings.DefaultConnection!);
+            if(isDevelopment)
+            {
+                _connection = new DbConnection(_dbSettings.LocalConnection!);
+            }
+            else
+            {
+                _connection = new DbConnection(_dbSettings.AzureConnection!);
+            }
+
         }
 
         public async Task<Guid> CreateAsync(T data)
