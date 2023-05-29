@@ -21,6 +21,8 @@ namespace BasicCRM.Business.Profiles
             CreateMap<Client, GetClientDto>().ReverseMap();
             CreateMap<ClientToCreateDto, Client>();
             CreateMap<ClientToUpdateDto, Client>();
+
+            CreateMap<ClientWithAddress, GetClientDto>();
         }
     }
 }

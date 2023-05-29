@@ -35,15 +35,15 @@ function ClientIndex() {
 		},
 		{
 			name: "Address Line",
-			selector: (row) => (row.address != null ? row.address.addressLine : "")
+			selector: (row) => (row != null ? row.addressLine : "")
 		},
 		{
 			name: "City",
-			selector: (row) => (row.address != null ? row.address.city : "")
+			selector: (row) => (row != null ? row.city : "")
 		},
 		{
 			name: "State",
-			selector: (row) => (row.address != null ? row.address.state : "")
+			selector: (row) => (row != null ? row.state : "")
 		},
 		{
 			selector: (row) => (

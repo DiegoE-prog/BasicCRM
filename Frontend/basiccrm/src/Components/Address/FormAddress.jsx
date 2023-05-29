@@ -89,6 +89,22 @@ function FromAddress(props) {
 				/>
 				<span className="text-danger">{errors.state && errors.state.message}</span>
 			</div>
+			<div className="col-12 mb-2 p-1">
+				<label htmlFor="country" class="form-label">
+					Country
+				</label>
+				<input
+					type="text"
+					className="form-control form-control-sm"
+					value={address.country}
+					name="country"
+					{...register("country", {
+						required: "Required"
+					})}
+					onChange={handleChange}
+				/>
+				<span className="text-danger">{errors.country && errors.country.message}</span>
+			</div>
 			<div className="col-12  mb-2 p-1">
 				<label htmlFor="zipCode" class="form-label">
 					Zip Code
@@ -108,22 +124,6 @@ function FromAddress(props) {
 					onChange={handleChange}
 				/>
 				<span className="text-danger">{errors.zipCode && errors.zipCode?.message}</span>
-			</div>
-			<div className="col-12 mb-2 p-1">
-				<label htmlFor="country" class="form-label">
-					Country
-				</label>
-				<input
-					type="text"
-					className="form-control form-control-sm"
-					value={address.country}
-					name="country"
-					{...register("country", {
-						required: "Required"
-					})}
-					onChange={handleChange}
-				/>
-				<span className="text-danger">{errors.country && errors.country.message}</span>
 			</div>
 			<div className="col-12 col-md-6 offset-md-3 p-2">
 				<button type="submit" className="btn btn-primary btn-sm form-control">
