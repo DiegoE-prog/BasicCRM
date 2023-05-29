@@ -32,7 +32,6 @@ function AddAddress() {
 		}
 
 		const response = await addAddressAsync(addressData)
-		console.log(response)
 		if (response.data.success) {
 			MySwal.fire({
 				position: "top-end",

@@ -9,7 +9,7 @@ namespace BasicCRM.Data.Repository
 {
     public class BaseRepository<T> : IRepository<T>
     {
-        private readonly DbConnection _connection;
+        public DbConnection _connection;
         private DatabaseSettings _dbSettings;
         public string SpGetAll { get; set; } = String.Empty;
         public string SpGetById { get; set; } = String.Empty;

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace BasicCRM.Business.Dtos.ClientDto
 {
-    public record GetClientDto
+    public class GetClientDto : Address
     {
         public Guid ClientID { get; init; }
         public string FirstName { get; init; }
@@ -20,6 +20,6 @@ namespace BasicCRM.Business.Dtos.ClientDto
         public string Email { get; init; }
         public string PhoneNumber { get; init; }
         public Guid AddressID { get; set; }
-        public GetAddressDto? Address { get; set; }
+        //public GetAddressDto? Address { get; set; }
     }
 }

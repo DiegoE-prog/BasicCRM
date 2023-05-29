@@ -9,5 +9,6 @@ namespace BasicCRM.Data.Repository.Interfaces
 {
     public interface IClientRepository : IRepository<Client>
     {
+        Task<List<ClientWithAddress>> GetAllClientsWithAddress();
     }
 }
