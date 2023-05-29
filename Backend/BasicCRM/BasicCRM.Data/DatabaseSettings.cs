@@ -8,6 +8,7 @@ namespace BasicCRM.Data
 {
     public class DatabaseSettings
     {
-        public string? DefaultConnection { get; set; }
+        public string? LocalConnection { get; set; }
+        public string? AzureConnection { get; set; }
     }
 }
