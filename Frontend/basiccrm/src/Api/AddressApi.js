@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const URL = process.env.NODE_ENV === "development" ? "https://localhost:7081" : "dev-crmbasic-wepapi.azurewebsites.net"
+const URL = process.env.NODE_ENV === "development" ? "https://localhost:7081" : "https://dev-crmbasic-wepapi.azurewebsites.net"
 
 const getAdressesAsync = async () => {
 	const response = await axios.get(`${URL}/api/Address/`)
