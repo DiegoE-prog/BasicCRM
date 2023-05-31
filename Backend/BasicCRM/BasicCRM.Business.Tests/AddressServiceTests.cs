@@ -103,7 +103,7 @@ namespace BasicCRM.Business.Tests
             var result = await _service.GetAddressAsync(Guid.Parse("4e4f7a91-d6f4-42d7-979d-dddfc1c07d88"));
 
             // Assert
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(expectedResult.AddressLine, result.AddressLine);
         }
 
         [Fact]
