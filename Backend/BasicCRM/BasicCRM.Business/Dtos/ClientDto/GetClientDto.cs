@@ -5,21 +5,20 @@ using System.Text.Json.Serialization;
 
 namespace BasicCRM.Business.Dtos.ClientDto
 {
-    public class GetClientDto : Address
+    public class GetClientDto : GetAddressDto
     {
-        public Guid ClientID { get; init; }
-        public string FirstName { get; init; }
-        public string LastName { get; init; }
+        public Guid ClientID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         [JsonIgnore]
-        public DateTime DateOfBirth { get; init; }
+        public DateTime DateOfBirth { get; set; }
         public string DateOfBirthday
         {
             get { return DateOfBirth.ToString("MM/dd/yyyy"); }
             set { }
         }
-        public string Email { get; init; }
-        public string PhoneNumber { get; init; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public Guid AddressID { get; set; }
-        //public GetAddressDto? Address { get; set; }
     }
 }

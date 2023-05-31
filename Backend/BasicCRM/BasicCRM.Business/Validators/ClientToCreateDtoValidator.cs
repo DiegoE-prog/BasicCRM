@@ -13,28 +13,23 @@ namespace BasicCRM.Business.Validators
         {
             RuleFor(p => p.FirstName)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .NotNull()
                 .MaximumLength(25).WithMessage("Length needs to be lower that 25");
 
             RuleFor(p => p.LastName)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .NotNull()
                 .MaximumLength(25).WithMessage("Length needs to be lower that 25");
 
             RuleFor(p => p.DateOfBirth)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .NotNull()
                 .Must(DateIsValid).WithMessage("You have to enter a valid date");
 
             RuleFor(p => p.Email)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .NotNull()
                 .MaximumLength(40).WithMessage("Length needs to be lower that 40")
                 .Matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$").WithMessage("{PropertyName} needs to have a valid format");
 
             RuleFor(p => p.PhoneNumber)
                 .NotEmpty().WithMessage("{PropertyName} is required")
-                .NotNull()
                 .Length(10, 15).WithMessage("Length needs to be lower that 15 and higher than 10");
 
             RuleFor(p => p.AddressID)
