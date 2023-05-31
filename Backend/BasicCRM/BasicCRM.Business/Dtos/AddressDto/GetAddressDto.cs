@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BasicCRM.Business.Dtos.AddressDto
 {
-    public record GetAddressDto
+    public class GetAddressDto
     {
-        public Guid AddressID { get; init; }
-        public string AddressLine { get; init; }
-        public string? AddressDetails { get; init; }
-        public string City { get; init; }
-        public string State { get; init; }
-        public int ZipCode { get; init; }
-        public string Country { get; init; }
+        public Guid AddressID { get; set; }
+        public string AddressLine { get; set; }
+        public string? AddressDetails { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int ZipCode { get; set; }
+        public string Country { get; set; }
     }
 }
