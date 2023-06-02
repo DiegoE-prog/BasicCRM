@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCRM.Business", "BasicC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCRM.API", "BasicCRM.API\BasicCRM.API.csproj", "{8A9F0FE6-497A-490F-A9D5-7E744BD862C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCRM.Business.Tests", "BasicCRM.Business.Tests\BasicCRM.Business.Tests.csproj", "{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicCRM.Business.Tests", "BasicCRM.Business.Tests\BasicCRM.Business.Tests.csproj", "{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicCRM.API.Tests", "BasicCRM.API.Tests\BasicCRM.API.Tests.csproj", "{941910F8-48FA-410A-99DD-437406F295DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9D8A596-8A83-4F9E-B97C-C760EB5D510D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{941910F8-48FA-410A-99DD-437406F295DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{941910F8-48FA-410A-99DD-437406F295DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{941910F8-48FA-410A-99DD-437406F295DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{941910F8-48FA-410A-99DD-437406F295DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
